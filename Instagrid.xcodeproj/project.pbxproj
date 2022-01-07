@@ -56,15 +56,47 @@
 		E438905D2788743500DEB7D5 /* Instagrid */ = {
 			isa = PBXGroup;
 			children = (
+				E43890762788776600DEB7D5 /* SupportingFiles */,
+				E4389072278876E300DEB7D5 /* Model */,
+				E4389074278876FC00DEB7D5 /* Controller */,
+				E4389073278876F200DEB7D5 /* View */,
+			);
+			path = Instagrid;
+			sourceTree = "<group>";
+		};
+		E4389072278876E300DEB7D5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E4389073278876F200DEB7D5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E43890642788743500DEB7D5 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E4389074278876FC00DEB7D5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E43890622788743500DEB7D5 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E43890762788776600DEB7D5 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
 				E438905E2788743500DEB7D5 /* AppDelegate.swift */,
 				E43890602788743500DEB7D5 /* SceneDelegate.swift */,
-				E43890622788743500DEB7D5 /* ViewController.swift */,
-				E43890642788743500DEB7D5 /* Main.storyboard */,
 				E43890672788743600DEB7D5 /* Assets.xcassets */,
 				E43890692788743600DEB7D5 /* LaunchScreen.storyboard */,
 				E438906C2788743600DEB7D5 /* Info.plist */,
 			);
-			path = Instagrid;
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
