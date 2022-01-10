@@ -7,27 +7,6 @@
 
 import UIKit
 
-
-enum PhotoButtonPlace {
-    case top, bottom
-}
-struct PhotoLayout {
-    let numberOfPhotosOnTop: Int
-    let numberOfPhotosOnBottom: Int
-}
-
-struct PhotoLayoutProvider: CaseIterable {
-    static let shared = PhotoLayoutProvider()
-    
-    let photoLayouts: [PhotoLayout] = [
-        .init(numberOfPhotosOnTop: 1, numberOfPhotosOnBottom: 2),
-        .init(numberOfPhotosOnTop: 2, numberOfPhotosOnBottom: 1),
-        .init(numberOfPhotosOnTop: 2, numberOfPhotosOnBottom: 2)
-    ]
-}
-
-
-
 class PhotoLayoutViewController: UIViewController {
 
 
@@ -71,7 +50,7 @@ class PhotoLayoutViewController: UIViewController {
     
     private func createPhotoButton(in stackView: UIStackView) {
         let phottoButtonView = UIButton()
-        phottoButtonView.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+//        phottoButtonView.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
         phottoButtonView.backgroundColor = .white
         stackView.addArrangedSubview(phottoButtonView)
     }
