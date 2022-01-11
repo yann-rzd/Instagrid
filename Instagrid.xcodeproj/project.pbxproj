@@ -18,6 +18,7 @@
 		E438907E2788824F00DEB7D5 /* PhotoLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E438907D2788824F00DEB7D5 /* PhotoLayoutProvider.swift */; };
 		E438908127889C5000DEB7D5 /* PhotoLayoutGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E438908027889C5000DEB7D5 /* PhotoLayoutGrid.swift */; };
 		E4F4289D278DD76B00DEAA55 /* LayoutButtonProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F4289C278DD76B00DEAA55 /* LayoutButtonProvider.swift */; };
+		E4F4289F278DE9DC00DEAA55 /* LayoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F4289E278DE9DC00DEAA55 /* LayoutButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		E438907D2788824F00DEB7D5 /* PhotoLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLayoutProvider.swift; sourceTree = "<group>"; };
 		E438908027889C5000DEB7D5 /* PhotoLayoutGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLayoutGrid.swift; sourceTree = "<group>"; };
 		E4F4289C278DD76B00DEAA55 /* LayoutButtonProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutButtonProvider.swift; sourceTree = "<group>"; };
+		E4F4289E278DE9DC00DEAA55 /* LayoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			children = (
 				E43890642788743500DEB7D5 /* Main.storyboard */,
 				E438908027889C5000DEB7D5 /* PhotoLayoutGrid.swift */,
+				E4F4289E278DE9DC00DEAA55 /* LayoutButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4F4289F278DE9DC00DEAA55 /* LayoutButton.swift in Sources */,
 				E43890632788743500DEB7D5 /* PhotoLayoutViewController.swift in Sources */,
 				E438905F2788743500DEB7D5 /* AppDelegate.swift in Sources */,
 				E4F4289D278DD76B00DEAA55 /* LayoutButtonProvider.swift in Sources */,

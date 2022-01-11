@@ -82,10 +82,17 @@ class PhotoLayoutViewController: UIViewController {
     
     private func createPhotoButton(in stackView: UIStackView) {
         
-        let phottoButtonView = UIButton()
-        phottoButtonView.addTarget(self, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
-        phottoButtonView.backgroundColor = .white
-        stackView.addArrangedSubview(phottoButtonView)
+        let photoButtonView = UIButton()
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        let image = UIImage(named: "Plus.png")
+        imageView.image = image
+        
+        photoButtonView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
+        photoButtonView.setImage(image, for: UIControl.State.normal)
+        stackView.addArrangedSubview(photoButtonView)
+        
+
     }
     
     
