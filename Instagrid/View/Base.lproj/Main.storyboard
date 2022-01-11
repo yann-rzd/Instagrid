@@ -77,86 +77,26 @@
                                     <constraint firstItem="IFN-d2-CPG" firstAttribute="leading" secondItem="Y6p-of-te4" secondAttribute="leading" constant="10" id="zBt-JQ-Qjb"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMG-4s-90N">
-                                <rect key="frame" x="52" y="742" width="80" height="80"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="JOM-xL-cT2">
+                                <rect key="frame" x="0.0" y="782" width="414" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="1Nr-uP-dEb"/>
-                                    <constraint firstAttribute="height" constant="80" id="Xyj-Gl-XWo"/>
+                                    <constraint firstAttribute="height" constant="80" id="vVT-Lg-NOm"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" backgroundImage="Layout 1"/>
-                                <connections>
-                                    <action selector="didTapLayoutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w3N-CP-JAu"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eAE-Fu-CBR">
-                                <rect key="frame" x="167" y="742" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="0qc-jd-iEg"/>
-                                    <constraint firstAttribute="width" constant="80" id="NYn-Ak-sia"/>
-                                </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" backgroundImage="Layout 2"/>
-                                <connections>
-                                    <action selector="didTapLayoutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xy4-Al-LOk"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gS-xW-RmP">
-                                <rect key="frame" x="282" y="742" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="6s9-4R-nL9"/>
-                                    <constraint firstAttribute="width" constant="80" id="L6v-pG-2zz"/>
-                                </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" backgroundImage="Layout 3"/>
-                                <connections>
-                                    <action selector="didTapLayoutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="21k-VI-UlM"/>
-                                </connections>
-                            </button>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Selected" translatesAutoresizingMaskIntoConstraints="NO" id="ltd-Vw-Y5k">
-                                <rect key="frame" x="52" y="742" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="H7R-uk-Egu"/>
-                                    <constraint firstAttribute="height" constant="80" id="v4k-OT-BHY"/>
-                                </constraints>
-                            </imageView>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Selected" translatesAutoresizingMaskIntoConstraints="NO" id="rdF-Se-u9J">
-                                <rect key="frame" x="167" y="742" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="XsO-Df-aNg"/>
-                                    <constraint firstAttribute="width" constant="80" id="fsx-RL-kQb"/>
-                                </constraints>
-                            </imageView>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Selected" translatesAutoresizingMaskIntoConstraints="NO" id="cR9-tG-AhN">
-                                <rect key="frame" x="282" y="742" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="FLG-Aj-EC8"/>
-                                    <constraint firstAttribute="width" constant="80" id="I4y-kH-PJe"/>
-                                </constraints>
-                            </imageView>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.30588235289999999" green="0.56862745100000001" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="QrD-ah-uB3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="1Pa-DO-ole"/>
-                            <constraint firstItem="7gS-xW-RmP" firstAttribute="leading" secondItem="eAE-Fu-CBR" secondAttribute="trailing" constant="35" id="1uM-HZ-gBH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ltd-Vw-Y5k" secondAttribute="bottom" constant="40" id="2DM-P8-MDL"/>
-                            <constraint firstItem="cR9-tG-AhN" firstAttribute="leading" secondItem="eAE-Fu-CBR" secondAttribute="trailing" constant="35" id="3V1-TG-2NQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cR9-tG-AhN" secondAttribute="bottom" constant="40" id="AnO-PH-6vE"/>
-                            <constraint firstItem="eAE-Fu-CBR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EcZ-70-CWD"/>
+                            <constraint firstItem="JOM-xL-cT2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1z8-G8-pqr"/>
+                            <constraint firstItem="JOM-xL-cT2" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="BXb-ez-pRJ"/>
                             <constraint firstItem="QrD-ah-uB3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hjc-2s-K2e"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SMG-4s-90N" secondAttribute="bottom" constant="40" id="SD4-BY-VYV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JOM-xL-cT2" secondAttribute="trailing" id="PTu-s0-Tkr"/>
                             <constraint firstItem="p8H-j9-P6P" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VVF-tu-8S4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Y6p-of-te4" secondAttribute="trailing" constant="15" id="XaQ-qv-H6N"/>
-                            <constraint firstItem="rdF-Se-u9J" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XcO-aJ-5zZ"/>
-                            <constraint firstItem="eAE-Fu-CBR" firstAttribute="leading" secondItem="SMG-4s-90N" secondAttribute="trailing" constant="35" id="am5-ab-n6D"/>
                             <constraint firstItem="Y6p-of-te4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="eKa-n3-yQZ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eAE-Fu-CBR" secondAttribute="bottom" constant="40" id="eeI-kb-uUg"/>
                             <constraint firstItem="Y6p-of-te4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="fjO-6i-Hez"/>
-                            <constraint firstItem="eAE-Fu-CBR" firstAttribute="leading" secondItem="ltd-Vw-Y5k" secondAttribute="trailing" constant="35" id="hl5-H1-yf2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7gS-xW-RmP" secondAttribute="bottom" constant="40" id="iZT-RA-h4N"/>
                             <constraint firstItem="p8H-j9-P6P" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="irb-lY-QBC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rdF-Se-u9J" secondAttribute="bottom" constant="40" id="oub-IC-rFO"/>
                             <constraint firstItem="Y6p-of-te4" firstAttribute="top" secondItem="p8H-j9-P6P" secondAttribute="bottom" constant="20" id="sHk-h4-dFf"/>
                         </constraints>
                         <variation key="heightClass=compact">
@@ -168,9 +108,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomSectionLayoutStackView" destination="6Dl-Mc-xCj" id="cca-Jh-KLA"/>
-                        <outlet property="firstLayoutButton" destination="SMG-4s-90N" id="s2t-B0-6x0"/>
-                        <outlet property="secondLayoutButton" destination="eAE-Fu-CBR" id="E3t-t9-c19"/>
-                        <outlet property="thirdLayoutButton" destination="7gS-xW-RmP" id="651-zP-jQe"/>
+                        <outlet property="changePhotoLayoutButtonStackView" destination="JOM-xL-cT2" id="dXE-gX-KZF"/>
                         <outlet property="topSectionLayoutStackView" destination="uEE-zX-Meo" id="8CA-aX-Hfc"/>
                     </connections>
                 </viewController>
@@ -182,9 +120,5 @@
     <resources>
         <image name="Arrow Up" width="4.5" height="3.5"/>
         <image name="Instagrid" width="41.5" height="13"/>
-        <image name="Layout 1" width="27" height="27"/>
-        <image name="Layout 2" width="27" height="27"/>
-        <image name="Layout 3" width="27" height="27"/>
-        <image name="Selected" width="27" height="27"/>
     </resources>
 </document>

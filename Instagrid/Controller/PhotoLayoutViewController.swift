@@ -10,9 +10,9 @@ import UIKit
 class PhotoLayoutViewController: UIViewController {
 
 
-    @IBOutlet weak var firstLayoutButton: UIButton!
-    @IBOutlet weak var secondLayoutButton: UIButton!
-    @IBOutlet weak var thirdLayoutButton: UIButton!
+    @IBOutlet private weak var changePhotoLayoutButtonStackView: UIStackView!
+    
+
     @IBOutlet private weak var topSectionLayoutStackView: UIStackView!
     @IBOutlet private weak var bottomSectionLayoutStackView: UIStackView!
     
@@ -22,41 +22,29 @@ class PhotoLayoutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        createChangePhotoLayoutButtons()
     }
 
     
     @IBAction func didTapLayoutButton(_ sender: UIButton) {
-        firstLayoutButton.isSelected = false
-        secondLayoutButton.isSelected = false
-        thirdLayoutButton.isSelected = false
         
         sender.isSelected = true
         displaySelectedLayout(sender)
     }
     
-    private func displaySelectedLayout(_ layout: UIButton) {
-        switch layout {
-        case firstLayoutButton:
-            refreshLayoutGrid()
-            setupLayoutViews(photoLayoutIndex: 0)
-        case secondLayoutButton:
-            refreshLayoutGrid()
-            setupLayoutViews(photoLayoutIndex: 1)
-        case thirdLayoutButton:
-            refreshLayoutGrid()
-            setupLayoutViews(photoLayoutIndex: 2)
-        default:
-            break
-        }
+    @objc private func displaySelectedLayout(_ changeLayoutButton: UIButton) {
+        changePhotoLayoutButtons.forEach { $0.isSelected = false }
+        changeLayoutButton.isSelected = true
+        setupLayoutViews(photoLayoutIndex: changeLayoutButton.tag)
     }
     
-    private func refreshLayoutGrid() {
+    private func cleanLayoutGrid() {
         topSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
         bottomSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
     }
     
     private func setupLayoutViews(photoLayoutIndex: Int) {
+        cleanLayoutGrid()
         let photoLayout = photoLayoutProvider.photoLayouts[photoLayoutIndex]
         createLayout(from: photoLayout)
     
@@ -100,6 +88,33 @@ class PhotoLayoutViewController: UIViewController {
         
     }
     
+    
+    private func createChangePhotoLayoutButtons() {
+        for (index, photoLayout) in photoLayoutProvider.photoLayouts.enumerated() {
+            let button = UIButton()
+            
+            guard let selectedImage = UIImage(named: "Selected") else { return }
+            button.setImage(selectedImage, for: .selected)
+            button.setImage(nil, for: .normal)
+            
+            guard let backgroundImage = UIImage(named: photoLayout.imageName) else { return }
+            button.setBackgroundImage(backgroundImage, for: .normal)
+            
+            button.tag = index
+            //button.imageView?.contentMode = .scaleAspectFit
+            
+            button.addTarget(self, action: #selector(displaySelectedLayout), for: .touchUpInside)
+            
+            changePhotoLayoutButtonStackView.addArrangedSubview(button)
+            changePhotoLayoutButtons.append(button)
+        }
+    }
+    
+    
+    private var changePhotoLayoutButtons: [UIButton] = []
+    
+    
+
     
 }
 
