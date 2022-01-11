@@ -10,6 +10,9 @@ import UIKit
 class PhotoLayoutViewController: UIViewController {
 
 
+    @IBOutlet weak var firstLayoutButton: UIButton!
+    @IBOutlet weak var secondLayoutButton: UIButton!
+    @IBOutlet weak var thirdLayoutButton: UIButton!
     @IBOutlet private weak var topSectionLayoutStackView: UIStackView!
     @IBOutlet private weak var bottomSectionLayoutStackView: UIStackView!
     
@@ -19,10 +22,39 @@ class PhotoLayoutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayoutViews(photoLayoutIndex: 2)
+        
     }
 
     
+    @IBAction func didTapLayoutButton(_ sender: UIButton) {
+        firstLayoutButton.isSelected = false
+        secondLayoutButton.isSelected = false
+        thirdLayoutButton.isSelected = false
+        
+        sender.isSelected = true
+        displaySelectedLayout(sender)
+    }
+    
+    private func displaySelectedLayout(_ layout: UIButton) {
+        switch layout {
+        case firstLayoutButton:
+            refreshLayoutGrid()
+            setupLayoutViews(photoLayoutIndex: 0)
+        case secondLayoutButton:
+            refreshLayoutGrid()
+            setupLayoutViews(photoLayoutIndex: 1)
+        case thirdLayoutButton:
+            refreshLayoutGrid()
+            setupLayoutViews(photoLayoutIndex: 2)
+        default:
+            break
+        }
+    }
+    
+    private func refreshLayoutGrid() {
+        topSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
+        bottomSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
+    }
     
     private func setupLayoutViews(photoLayoutIndex: Int) {
         let photoLayout = photoLayoutProvider.photoLayouts[photoLayoutIndex]
@@ -49,8 +81,9 @@ class PhotoLayoutViewController: UIViewController {
     }
     
     private func createPhotoButton(in stackView: UIStackView) {
+        
         let phottoButtonView = UIButton()
-//        phottoButtonView.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+        phottoButtonView.addTarget(self, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
         phottoButtonView.backgroundColor = .white
         stackView.addArrangedSubview(phottoButtonView)
     }
