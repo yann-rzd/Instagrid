@@ -12,13 +12,14 @@ class PhotoLayoutViewController: UIViewController {
     //MARK: -PRIVATE: properties
     
     @IBOutlet private weak var changePhotoLayoutButtonStackView: UIStackView!
-
     @IBOutlet private weak var topSectionLayoutStackView: UIStackView!
     @IBOutlet private weak var bottomSectionLayoutStackView: UIStackView!
     
     private let photoLayoutProvider = PhotoLayoutProvider.shared
     
     private var changePhotoLayoutButtons: [UIButton] = []
+    
+    private var openPhotoLibraryImages: [UIImageView] = []
     
     
     //MARK: -INTERNAL: methods
@@ -35,6 +36,7 @@ class PhotoLayoutViewController: UIViewController {
     private func createChangePhotoLayoutButtons() {
         for (index, photoLayout) in photoLayoutProvider.photoLayouts.enumerated() {
             let button = UIButton()
+            
             
             guard let selectedImage = UIImage(named: "Selected") else { return }
             button.setImage(selectedImage, for: .selected)
@@ -79,6 +81,7 @@ class PhotoLayoutViewController: UIViewController {
     private func cleanLayoutGrid() {
         topSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
         bottomSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
+        openPhotoLibraryImages.removeAll()
     }
     
     
@@ -108,20 +111,42 @@ class PhotoLayoutViewController: UIViewController {
     /// This function allows you to create a button for the photo layout grid
     /// - parameter stackview: Add the button in the desired stackview (top or bottom)
     private func createPhotoButton(in stackView: UIStackView) {
+        let photoImageView = UIImageView()
         
-        let photoButtonView = UIButton()
-        
-        let image = UIImage(named: "Plus.png")
-        
-        photoButtonView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
-        photoButtonView.setImage(image, for: UIControl.State.normal)
-        stackView.addArrangedSubview(photoButtonView)
-        
+        photoImageView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
 
-    }    
-    
-    private func openPhotoLibrary() {
+        didTapOnImage(on: photoImageView)
         
+        openPhotoLibraryImages.append(photoImageView)
+        stackView.addArrangedSubview(photoImageView)
+        
+    }
+    
+    private func didTapOnImage(on imageView: UIImageView) {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openPhotoLibrary(tapGestureRecognizer:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc private func openPhotoLibrary(tapGestureRecognizer: UITapGestureRecognizer) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true)
     }
 }
 
+
+extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print("\(info)")
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
