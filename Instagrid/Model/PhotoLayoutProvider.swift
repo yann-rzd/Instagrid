@@ -7,16 +7,6 @@
 
 import Foundation
 
-enum PhotoButtonPlace: CaseIterable {
-    case top, bottom
-}
-
-struct PhotoLayout {
-    let numberOfPhotosOnTop: Int
-    let numberOfPhotosOnBottom: Int
-    let imageName: String
-}
-
 struct PhotoLayoutProvider {
     static let shared = PhotoLayoutProvider()
     

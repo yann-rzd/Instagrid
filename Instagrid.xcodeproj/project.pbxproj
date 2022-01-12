@@ -16,6 +16,8 @@
 		E43890792788785600DEB7D5 /* Delm-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E43890772788785600DEB7D5 /* Delm-Medium.otf */; };
 		E438907A2788785600DEB7D5 /* ThirstySoftRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E43890782788785600DEB7D5 /* ThirstySoftRegular.otf */; };
 		E438907E2788824F00DEB7D5 /* PhotoLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E438907D2788824F00DEB7D5 /* PhotoLayoutProvider.swift */; };
+		E4FAB3CA278F20C900671C56 /* PhotoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FAB3C9278F20C900671C56 /* PhotoLayout.swift */; };
+		E4FAB3CC278F20FC00671C56 /* PhotoButtonPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FAB3CB278F20FC00671C56 /* PhotoButtonPlace.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		E43890772788785600DEB7D5 /* Delm-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Delm-Medium.otf"; sourceTree = "<group>"; };
 		E43890782788785600DEB7D5 /* ThirstySoftRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThirstySoftRegular.otf; sourceTree = "<group>"; };
 		E438907D2788824F00DEB7D5 /* PhotoLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLayoutProvider.swift; sourceTree = "<group>"; };
+		E4FAB3C9278F20C900671C56 /* PhotoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLayout.swift; sourceTree = "<group>"; };
+		E4FAB3CB278F20FC00671C56 /* PhotoButtonPlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoButtonPlace.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +78,9 @@
 		E4389072278876E300DEB7D5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E4FAB3C9278F20C900671C56 /* PhotoLayout.swift */,
 				E438907D2788824F00DEB7D5 /* PhotoLayoutProvider.swift */,
+				E4FAB3CB278F20FC00671C56 /* PhotoButtonPlace.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -182,8 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E43890632788743500DEB7D5 /* PhotoLayoutViewController.swift in Sources */,
+				E4FAB3CA278F20C900671C56 /* PhotoLayout.swift in Sources */,
 				E438905F2788743500DEB7D5 /* AppDelegate.swift in Sources */,
 				E43890612788743500DEB7D5 /* SceneDelegate.swift in Sources */,
+				E4FAB3CC278F20FC00671C56 /* PhotoButtonPlace.swift in Sources */,
 				E438907E2788824F00DEB7D5 /* PhotoLayoutProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

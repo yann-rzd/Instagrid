@@ -77,11 +77,12 @@
                                     <constraint firstItem="IFN-d2-CPG" firstAttribute="leading" secondItem="Y6p-of-te4" secondAttribute="leading" constant="10" id="zBt-JQ-Qjb"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="JOM-xL-cT2">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JOM-xL-cT2">
                                 <rect key="frame" x="0.0" y="782" width="414" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="vVT-Lg-NOm"/>
                                 </constraints>
+                                <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="20" bottom="8" trailing="20"/>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -114,7 +115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-155" y="-631"/>
+            <point key="canvasLocation" x="-81" y="-686"/>
         </scene>
     </scenes>
     <resources>

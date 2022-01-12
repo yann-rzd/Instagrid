@@ -18,6 +18,7 @@ class PhotoLayoutViewController: UIViewController {
     
     private let photoLayoutProvider = PhotoLayoutProvider.shared
     
+    private var changePhotoLayoutButtons: [UIButton] = []
     
     
     override func viewDidLoad() {
@@ -72,9 +73,7 @@ class PhotoLayoutViewController: UIViewController {
         
         let photoButtonView = UIButton()
         
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
         let image = UIImage(named: "Plus.png")
-        imageView.image = image
         
         photoButtonView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
         photoButtonView.setImage(image, for: UIControl.State.normal)
@@ -95,13 +94,15 @@ class PhotoLayoutViewController: UIViewController {
             
             guard let selectedImage = UIImage(named: "Selected") else { return }
             button.setImage(selectedImage, for: .selected)
-            button.setImage(nil, for: .normal)
             
             guard let backgroundImage = UIImage(named: photoLayout.imageName) else { return }
             button.setBackgroundImage(backgroundImage, for: .normal)
             
+            button.contentVerticalAlignment = .fill
+            button.contentHorizontalAlignment = .fill
+            button.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: button, attribute: .width, multiplier: 1, constant: 0))
+            
             button.tag = index
-            //button.imageView?.contentMode = .scaleAspectFit
             
             button.addTarget(self, action: #selector(displaySelectedLayout), for: .touchUpInside)
             
@@ -111,7 +112,7 @@ class PhotoLayoutViewController: UIViewController {
     }
     
     
-    private var changePhotoLayoutButtons: [UIButton] = []
+    
     
     
 
