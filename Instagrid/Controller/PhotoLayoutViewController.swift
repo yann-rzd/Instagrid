@@ -14,10 +14,16 @@ class PhotoLayoutViewController: UIViewController {
     @IBOutlet private weak var changePhotoLayoutButtonStackView: UIStackView!
     @IBOutlet private weak var topSectionLayoutStackView: UIStackView!
     @IBOutlet private weak var bottomSectionLayoutStackView: UIStackView!
+
+    @IBOutlet private weak var mainPhotoLayoutView: UIView!
+    
     
     private let photoLayoutProvider = PhotoLayoutProvider.shared
     
     private var changePhotoLayoutButtons: [UIButton] = []
+    
+    
+    private var currentSelectedButtonImageView: UIImageView?
     
     private var openPhotoLibraryImages: [UIImageView] = []
     
@@ -88,30 +94,50 @@ class PhotoLayoutViewController: UIViewController {
     /// This function is used to create the layout
     /// - parameter photoLayout: The layout to create (from PhotoLayoutProvider)
     private func createLayout(from photoLayout: PhotoLayout) {
-        createPhotoButtons(number: photoLayout.numberOfPhotosOnTop, place: .top)
-        createPhotoButtons(number: photoLayout.numberOfPhotosOnBottom, place: .bottom)
+        createImageViews(number: photoLayout.numberOfPhotosOnTop, place: .top)
+        createImageViews(number: photoLayout.numberOfPhotosOnBottom, place: .bottom)
     }
     
     
     /// This function creates all buttons in the stackview
     /// - parameter number: The number of buttons to create
     /// - parameter place: Place to create the buttons (top or bottom)
-    private func createPhotoButtons(number: Int, place: PhotoButtonPlace) {
+    private func createImageViews(number: Int, place: PhotoButtonPlace) {
         for _ in 1...number {
             switch place {
             case .top:
-                createPhotoButton(in: topSectionLayoutStackView)
+                createImageView(in: topSectionLayoutStackView)
             case .bottom:
-                createPhotoButton(in: bottomSectionLayoutStackView)
+                createImageView(in: bottomSectionLayoutStackView)
             }
         }
     }
     
     
-    /// This function allows you to create a button for the photo layout grid
-    /// - parameter stackview: Add the button in the desired stackview (top or bottom)
-    private func createPhotoButton(in stackView: UIStackView) {
+    /// This function allows you to create a image view for the photo layout grid
+    /// - parameter stackview: Add the image view in the desired stackview (top or bottom)
+    func createImageView(in stackView: UIStackView) {
         let photoImageView = UIImageView()
+        
+        let iconName = "Plus.png"
+        let icon = UIImage(named: iconName)
+        let iconView = UIImageView(image: icon!)
+        
+        //iconView.center = photoImageView.center
+        
+        photoImageView.contentMode = .scaleAspectFill
+        photoImageView.clipsToBounds = true
+        
+        photoImageView.addSubview(iconView)
+        
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            iconView.centerXAnchor.constraint(equalTo: photoImageView.centerXAnchor),
+            iconView.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor),
+            iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
+            iconView.widthAnchor.constraint(equalToConstant: 45)
+        ])
         
         photoImageView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
 
@@ -129,24 +155,32 @@ class PhotoLayoutViewController: UIViewController {
     }
     
     @objc private func openPhotoLibrary(tapGestureRecognizer: UITapGestureRecognizer) {
+        currentSelectedButtonImageView = tapGestureRecognizer.view as? UIImageView
+        
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
-        imagePicker.allowsEditing = true
+        imagePicker.allowsEditing = false
         present(imagePicker, animated: true)
     }
 }
-
 
 extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         print("\(info)")
         
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        guard let selectedImage = info[.originalImage] as? UIImage else { return }
+        currentSelectedButtonImageView?.image = selectedImage
+        
+        for subView in currentSelectedButtonImageView!.subviews {
+            if let imageView = subView as? UIImageView {
+                imageView.removeFromSuperview()
+            }
+        }
+        
+        currentSelectedButtonImageView = nil
+  
         picker.dismiss(animated: true, completion: nil)
     }
 }
