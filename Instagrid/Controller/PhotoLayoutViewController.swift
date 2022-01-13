@@ -123,8 +123,6 @@ class PhotoLayoutViewController: UIViewController {
         let icon = UIImage(named: iconName)
         let iconView = UIImageView(image: icon!)
         
-        //iconView.center = photoImageView.center
-        
         photoImageView.contentMode = .scaleAspectFill
         photoImageView.clipsToBounds = true
         
@@ -148,12 +146,18 @@ class PhotoLayoutViewController: UIViewController {
         
     }
     
+    
+    /// This function recognize when the user tap on photoImageView
+    /// - parameter imageView: The imageView tapped
     private func didTapOnImage(on imageView: UIImageView) {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openPhotoLibrary(tapGestureRecognizer:)))
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    
+    /// This function open the photo library for choose a photo
+    /// - parameter tapGestureRecognizer: The tap gesture
     @objc private func openPhotoLibrary(tapGestureRecognizer: UITapGestureRecognizer) {
         currentSelectedButtonImageView = tapGestureRecognizer.view as? UIImageView
         
@@ -165,10 +169,10 @@ class PhotoLayoutViewController: UIViewController {
     }
 }
 
+
 extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print("\(info)")
         
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
         currentSelectedButtonImageView?.image = selectedImage
