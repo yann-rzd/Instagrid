@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_0" orientation="landscape" appearance="light"/>
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Delm-Medium.otf">
-            <string>Delm-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Photo Layout View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="PhotoLayoutViewController" customModule="Instagrid" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Instagrid" translatesAutoresizingMaskIntoConstraints="NO" id="QrD-ah-uB3">
-                                <rect key="frame" x="360" y="20" width="124" height="39"/>
+                                <rect key="frame" x="133" y="64" width="124" height="39"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="124" id="eKH-SP-cRo"/>
                                     <constraint firstAttribute="height" constant="39" id="wII-XV-vRC"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="p8H-j9-P6P">
-                                <rect key="frame" x="75" y="191.33333333333334" width="142" height="45.333333333333343"/>
+                                <rect key="frame" x="124" y="176.66666666666666" width="142" height="45.333333333333343"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Arrow Up" translatesAutoresizingMaskIntoConstraints="NO" id="y56-Aq-ocJ">
                                         <rect key="frame" x="64" y="0.0" width="14" height="10"/>
@@ -38,31 +33,49 @@
                                         </constraints>
                                         <variation key="heightClass=compact" image="Arrow Left"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe up to share" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qh-eo-0YT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qh-eo-0YT">
                                         <rect key="frame" x="0.3333333333333286" y="20" width="141.66666666666669" height="25.333333333333329"/>
-                                        <fontDescription key="fontDescription" name="Delm-Medium" family="Delm" pointSize="23"/>
-                                        <color key="textColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Swipe left to share">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="23" name="Delm-Medium"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular">
+                                            <attributedString key="attributedText">
+                                                <fragment content="Swipe up to share">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="23" name="Delm-Medium"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </variation>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="142" id="kMb-eN-icZ"/>
+                                    <constraint firstAttribute="width" constant="142" id="kMb-eN-icZ">
+                                        <variation key="heightClass=compact" constant="155"/>
+                                    </constraint>
                                     <constraint firstAttribute="height" constant="45.5" id="oWF-NR-5or"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="142" id="toz-XE-k5q"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45.5" id="z6f-cd-Rf6"/>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6p-of-te4">
-                                <rect key="frame" x="277" y="69" width="290" height="290"/>
+                                <rect key="frame" x="15" y="242" width="360" height="360"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="IFN-d2-CPG">
-                                        <rect key="frame" x="10" y="10" width="270" height="270"/>
+                                        <rect key="frame" x="10" y="10" width="340" height="340"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="uEE-zX-Meo">
-                                                <rect key="frame" x="0.0" y="0.0" width="270" height="127.66666666666667"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="340" height="162.66666666666666"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="6Dl-Mc-xCj">
-                                                <rect key="frame" x="0.0" y="142.66666666666666" width="270" height="127.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="177.66666666666669" width="340" height="162.33333333333331"/>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -77,7 +90,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JOM-xL-cT2">
-                                <rect key="frame" x="674" y="69" width="90" height="290"/>
+                                <rect key="frame" x="0.0" y="730" width="390" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="AQr-Me-1tQ"/>
                                     <constraint firstAttribute="height" constant="80" id="vVT-Lg-NOm"/>
@@ -177,12 +190,13 @@
                         <outlet property="bottomSectionLayoutStackView" destination="6Dl-Mc-xCj" id="cca-Jh-KLA"/>
                         <outlet property="changePhotoLayoutButtonStackView" destination="JOM-xL-cT2" id="dXE-gX-KZF"/>
                         <outlet property="mainPhotoLayoutView" destination="Y6p-of-te4" id="9JE-IH-fl8"/>
+                        <outlet property="swipeToShareStackView" destination="p8H-j9-P6P" id="ghT-sR-LwT"/>
                         <outlet property="topSectionLayoutStackView" destination="uEE-zX-Meo" id="8CA-aX-Hfc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-387.44075829383883" y="-795.38461538461536"/>
+            <point key="canvasLocation" x="117" y="-1582"/>
         </scene>
     </scenes>
     <resources>

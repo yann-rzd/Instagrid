@@ -17,11 +17,11 @@ class PhotoLayoutViewController: UIViewController {
 
     @IBOutlet private weak var mainPhotoLayoutView: UIView!
     
+    @IBOutlet private weak var swipeToShareStackView: UIStackView!
     
     private let photoLayoutProvider = PhotoLayoutProvider.shared
     
     private var changePhotoLayoutButtons: [UIButton] = []
-    
     
     private var currentSelectedButtonImageView: UIImageView?
     
@@ -32,10 +32,85 @@ class PhotoLayoutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         createChangePhotoLayoutButtons()
+        
+        mainPhotoLayoutView.addGestureRecognizer(createSwipeGestureRecognizer(for: .up))
+        mainPhotoLayoutView.addGestureRecognizer(createSwipeGestureRecognizer(for: .left))
+    }
+    
+    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+        
+        swipeGestureRecognizer.direction = direction
+        
+        return swipeGestureRecognizer
+    }
+    
+    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
+        let screenHeight = UIScreen.main.bounds.height
+        let screenWidth = UIScreen.main.bounds.width
+
+        var translationTransform = CGAffineTransform()
+        
+        switch sender.direction {
+            case .up:
+                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
+            case .left:
+                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+            default:
+                break
+            }
+
+        UIView.animate(withDuration: 0.5, animations: {
+            self.mainPhotoLayoutView.transform = translationTransform
+            self.swipeToShareStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
+        }) { (succes) in
+
+            if succes {
+                self.share()
+            }
+        }
+    }
+    
+    private func share() {
+        let image = UIImage(view: mainPhotoLayoutView)
+        
+        // set up activity view controller
+        let imageToShare = [ image ]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        
+        // exclude some activity types from the list (optional)
+        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+        
+        // Did share or cancel
+        activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            // Play showPictureView func
+            self.showMainPhotoLayoutView()
+        }
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
     }
 
+    private func showMainPhotoLayoutView(){
+            
+        // Move the pictureView to her initial place
+        mainPhotoLayoutView.transform = .identity            
+        // Then scale her to 0
+        mainPhotoLayoutView.transform = CGAffineTransform(scaleX: 0, y: 0)            
+        // Animate the pictureView and the icon/label reappearance with a bounce effecte
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+            self.mainPhotoLayoutView.transform = .identity
+            self.swipeToShareStackView.transform = .identity
+        })
+    }
     
+    
+    
+
+
     //MARK: -PRIVATE: methods
     
     /// This function allows you to create a button for each type of photo layout grid and add it to the stackview.
@@ -186,5 +261,15 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigati
         currentSelectedButtonImageView = nil
   
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension UIImage {
+    convenience init(view: UIView) {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in:UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.init(cgImage: image!.cgImage!)
     }
 }
