@@ -39,77 +39,6 @@ class PhotoLayoutViewController: UIViewController {
         mainPhotoLayoutView.addGestureRecognizer(createSwipeGestureRecognizer(for: .left))
     }
     
-    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
-        
-        swipeGestureRecognizer.direction = direction
-        
-        return swipeGestureRecognizer
-    }
-    
-    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
-        let screenHeight = UIScreen.main.bounds.height
-        let screenWidth = UIScreen.main.bounds.width
-
-        var translationTransform = CGAffineTransform()
-        
-        switch sender.direction {
-            case .up:
-                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
-            case .left:
-                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
-            default:
-                break
-            }
-
-        UIView.animate(withDuration: 0.5, animations: {
-            self.mainPhotoLayoutView.transform = translationTransform
-            self.swipeToShareStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
-        }) { (succes) in
-
-            if succes {
-                self.share()
-            }
-        }
-    }
-    
-    private func share() {
-        let image = UIImage(view: mainPhotoLayoutView)
-        
-        // set up activity view controller
-        let imageToShare = [ image ]
-        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        
-        // exclude some activity types from the list (optional)
-        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
-        
-        // Did share or cancel
-        activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            // Play showPictureView func
-            self.showMainPhotoLayoutView()
-        }
-        
-        // present the view controller
-        self.present(activityViewController, animated: true, completion: nil)
-    }
-
-    private func showMainPhotoLayoutView(){
-            
-        // Move the pictureView to her initial place
-        mainPhotoLayoutView.transform = .identity            
-        // Then scale her to 0
-        mainPhotoLayoutView.transform = CGAffineTransform(scaleX: 0, y: 0)            
-        // Animate the pictureView and the icon/label reappearance with a bounce effecte
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
-            self.mainPhotoLayoutView.transform = .identity
-            self.swipeToShareStackView.transform = .identity
-        })
-    }
-    
-    
-    
-
 
     //MARK: -PRIVATE: methods
     
@@ -242,8 +171,88 @@ class PhotoLayoutViewController: UIViewController {
         imagePicker.allowsEditing = false
         present(imagePicker, animated: true)
     }
+    
+    
+    // MARK: -Swipe to share
+    
+    /// This function identifies the direction of the swipe
+    /// - parameter direction: Direction of the swipe gesture
+    /// - returns: The swipe gesture
+    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+        
+        swipeGestureRecognizer.direction = direction
+        
+        return swipeGestureRecognizer
+    }
+    
+    
+    /// This function triggers the swipe function if the user has swiped and add some animations.
+    /// - parameter sender: UISwipeGestureRecognizer.
+    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
+        let screenHeight = UIScreen.main.bounds.height
+        let screenWidth = UIScreen.main.bounds.width
+
+        var translationTransform = CGAffineTransform()
+        
+        switch sender.direction {
+            case .up:
+                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
+            case .left:
+                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+            default:
+                break
+            }
+
+        UIView.animate(withDuration: 0.5, animations: {
+            self.mainPhotoLayoutView.transform = translationTransform
+            self.swipeToShareStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
+        }) { (succes) in
+
+            if succes {
+                self.share()
+            }
+        }
+    }
+    
+    
+    /// This function allows to share the desired content
+    private func share() {
+        let image = UIImage(view: mainPhotoLayoutView)
+        
+        // set up activity view controller
+        let imageToShare = [ image ]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        
+        // exclude some activity types from the list (optional)
+        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+        
+        // Did share or cancel
+        activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            // Play showPictureView func
+            self.showMainPhotoLayoutView()
+        }
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    
+    /// This function resets the position of the elements
+    private func showMainPhotoLayoutView(){
+        mainPhotoLayoutView.transform = .identity
+        mainPhotoLayoutView.transform = CGAffineTransform(scaleX: 0, y: 0)
+
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+            self.mainPhotoLayoutView.transform = .identity
+            self.swipeToShareStackView.transform = .identity
+        })
+    }
 }
 
+
+// MARK: -EXTENSIONS
 
 extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
