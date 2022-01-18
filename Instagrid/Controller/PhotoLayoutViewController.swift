@@ -31,7 +31,6 @@ class PhotoLayoutViewController: UIViewController {
         return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
     }
     
-  
     private var swipeGesture: UISwipeGestureRecognizer?
     
     // MARK: - INTERNAL: Methods
@@ -197,18 +196,6 @@ class PhotoLayoutViewController: UIViewController {
     
     // MARK: - Swipe to share
     
-    /// This function identifies the direction of the swipe
-    /// - parameter direction: Direction of the swipe gesture
-    /// - returns: The swipe gesture
-//    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
-//        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
-//
-//        swipeGestureRecognizer.direction = direction
-//
-//        return swipeGestureRecognizer
-//    }
-    
-    
     /// This function triggers the swipe function if the user has swiped and add some animations.
     /// - parameter sender: UISwipeGestureRecognizer.
     @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
@@ -242,8 +229,6 @@ class PhotoLayoutViewController: UIViewController {
     private func share() {
         guard let image = UIImage(view: mainPhotoLayoutView) else { return }
         
-    
-        
         // set up activity view controller
         let imageToShare = [ image ]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
@@ -275,7 +260,7 @@ class PhotoLayoutViewController: UIViewController {
 }
 
 
-// MARK: -EXTENSIONS
+// MARK: - EXTENSIONS
 
 extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -309,17 +294,3 @@ extension UIImage {
         self.init(cgImage: cgImage)
     }
 }
-
-
-//extension PhotoLayoutViewController: UIGestureRecognizerDelegate {
-//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//            let gesture = gestureRecognizer as? UISwipeGestureRecognizer
-//
-//        switch UIDevice.current.orientation {
-//            case .portrait: return gesture?.direction == .up
-//            case .landscapeLeft: return gesture?.direction == .left
-//            case .landscapeRight: return gesture?.direction == .left
-//            default : return false
-//        }
-//        }
-//}
