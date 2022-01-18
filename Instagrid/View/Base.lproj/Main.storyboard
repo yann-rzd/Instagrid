@@ -6,6 +6,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="ThirstySoftRegular.otf">
+            <string>ThirstySoftRegular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Photo Layout View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -15,13 +20,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Instagrid" translatesAutoresizingMaskIntoConstraints="NO" id="QrD-ah-uB3">
-                                <rect key="frame" x="133" y="64" width="124" height="39"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="124" id="eKH-SP-cRo"/>
-                                    <constraint firstAttribute="height" constant="39" id="wII-XV-vRC"/>
-                                </constraints>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="p8H-j9-P6P">
                                 <rect key="frame" x="124" y="176.66666666666666" width="142" height="45.333333333333343"/>
                                 <subviews>
@@ -114,19 +112,27 @@
                                     </mask>
                                 </variation>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagrid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kK-QH-2W3">
+                                <rect key="frame" x="135.66666666666666" y="64" width="118.66666666666666" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="118.67" id="7aJ-7n-YvM"/>
+                                    <constraint firstAttribute="height" constant="39" id="M8d-1y-EeM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ThirstySoftRegular" family="Thirsty Soft" pointSize="30"/>
+                                <color key="textColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.30588235289999999" green="0.56862745100000001" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="QrD-ah-uB3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="1Pa-DO-ole"/>
                             <constraint firstItem="JOM-xL-cT2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1z8-G8-pqr"/>
+                            <constraint firstItem="3kK-QH-2W3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="36s-wy-YY5"/>
                             <constraint firstItem="Y6p-of-te4" firstAttribute="leading" secondItem="p8H-j9-P6P" secondAttribute="trailing" constant="60" id="80g-Km-vmE"/>
                             <constraint firstItem="JOM-xL-cT2" firstAttribute="centerY" secondItem="Y6p-of-te4" secondAttribute="centerY" id="8CL-qv-v3V"/>
                             <constraint firstItem="JOM-xL-cT2" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="BXb-ez-pRJ"/>
                             <constraint firstItem="JOM-xL-cT2" firstAttribute="height" secondItem="Y6p-of-te4" secondAttribute="height" id="CZ2-zz-92n"/>
-                            <constraint firstItem="QrD-ah-uB3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hjc-2s-K2e"/>
                             <constraint firstItem="p8H-j9-P6P" firstAttribute="centerY" secondItem="Y6p-of-te4" secondAttribute="centerY" id="Ifo-WJ-K9T"/>
-                            <constraint firstItem="Y6p-of-te4" firstAttribute="top" secondItem="QrD-ah-uB3" secondAttribute="bottom" constant="10" id="OHa-xV-b5I"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JOM-xL-cT2" secondAttribute="trailing" id="PTu-s0-Tkr"/>
                             <constraint firstAttribute="trailing" secondItem="JOM-xL-cT2" secondAttribute="trailing" constant="80" id="PmD-Qw-zEG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Y6p-of-te4" secondAttribute="bottom" constant="10" id="Py6-EV-uha"/>
@@ -135,7 +141,9 @@
                             <constraint firstItem="Y6p-of-te4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="fjO-6i-Hez"/>
                             <constraint firstItem="p8H-j9-P6P" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="irb-lY-QBC"/>
                             <constraint firstItem="Y6p-of-te4" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="la2-sf-2jw"/>
+                            <constraint firstItem="3kK-QH-2W3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rve-ql-6f1"/>
                             <constraint firstItem="Y6p-of-te4" firstAttribute="top" secondItem="p8H-j9-P6P" secondAttribute="bottom" constant="20" id="sHk-h4-dFf"/>
+                            <constraint firstItem="Y6p-of-te4" firstAttribute="top" secondItem="3kK-QH-2W3" secondAttribute="bottom" constant="10" id="x2X-RA-xvH"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -145,11 +153,11 @@
                                 <exclude reference="Ifo-WJ-K9T"/>
                                 <exclude reference="irb-lY-QBC"/>
                                 <exclude reference="80g-Km-vmE"/>
-                                <exclude reference="OHa-xV-b5I"/>
                                 <exclude reference="eKa-n3-yQZ"/>
                                 <exclude reference="fjO-6i-Hez"/>
                                 <exclude reference="la2-sf-2jw"/>
                                 <exclude reference="sHk-h4-dFf"/>
+                                <exclude reference="x2X-RA-xvH"/>
                                 <exclude reference="1z8-G8-pqr"/>
                                 <exclude reference="8CL-qv-v3V"/>
                                 <exclude reference="BXb-ez-pRJ"/>
@@ -159,15 +167,14 @@
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="subviews">
-                                <include reference="QrD-ah-uB3"/>
                                 <include reference="Y6p-of-te4"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="Py6-EV-uha"/>
                                 <include reference="Ifo-WJ-K9T"/>
                                 <include reference="80g-Km-vmE"/>
-                                <include reference="OHa-xV-b5I"/>
                                 <include reference="la2-sf-2jw"/>
+                                <include reference="x2X-RA-xvH"/>
                                 <include reference="8CL-qv-v3V"/>
                                 <include reference="CZ2-zz-92n"/>
                                 <include reference="PmD-Qw-zEG"/>
@@ -196,12 +203,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117" y="-1582"/>
+            <point key="canvasLocation" x="-40" y="-1577"/>
         </scene>
     </scenes>
     <resources>
         <image name="Arrow Left" width="3.3333332538604736" height="4.6666665077209473"/>
         <image name="Arrow Up" width="4.6666665077209473" height="3.3333332538604736"/>
-        <image name="Instagrid" width="41.333332061767578" height="13"/>
     </resources>
 </document>

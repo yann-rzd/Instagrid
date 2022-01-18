@@ -15,28 +15,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Instagrid" translatesAutoresizingMaskIntoConstraints="NO" id="7Pd-yL-8GB">
-                                <rect key="frame" x="145" y="428.5" width="124" height="39"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ls_logo" translatesAutoresizingMaskIntoConstraints="NO" id="TNh-Qb-4p6">
+                                <rect key="frame" x="137" y="427" width="140" height="42"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="124" id="4LO-xu-zS7"/>
-                                    <constraint firstAttribute="height" constant="39" id="G8E-zI-q7d"/>
+                                    <constraint firstAttribute="height" constant="42" id="512-Hv-Z2e"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.062745098040000002" green="0.40000000000000002" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="7Pd-yL-8GB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="JOY-0X-DRa"/>
-                            <constraint firstItem="7Pd-yL-8GB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="JqD-kc-O6q"/>
+                            <constraint firstItem="TNh-Qb-4p6" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="71I-u0-PrX"/>
+                            <constraint firstItem="TNh-Qb-4p6" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="PBJ-Mf-6LP"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="155" y="397"/>
+            <point key="canvasLocation" x="153.62318840579712" y="396.42857142857139"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Instagrid" width="41.5" height="13"/>
+        <image name="ls_logo" width="140" height="42"/>
     </resources>
 </document>

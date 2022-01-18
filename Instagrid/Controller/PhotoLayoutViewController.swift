@@ -9,7 +9,7 @@ import UIKit
 
 class PhotoLayoutViewController: UIViewController {
 
-    //MARK: -PRIVATE: properties
+    //MARK: - PRIVATE: properties
     
     @IBOutlet private weak var changePhotoLayoutButtonStackView: UIStackView!
     @IBOutlet private weak var topSectionLayoutStackView: UIStackView!
@@ -27,20 +27,42 @@ class PhotoLayoutViewController: UIViewController {
     
     private var openPhotoLibraryImages: [UIImageView] = []
     
+    private var windowInterfaceOrientation: UIInterfaceOrientation? {
+        return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
+    }
     
-    //MARK: -INTERNAL: methods
+  
+    private var swipeGesture: UISwipeGestureRecognizer?
+    
+    // MARK: - INTERNAL: Methods
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { (context) in
+            guard let windowInterfaceOrientation = self.windowInterfaceOrientation else { return }
+            
+            if windowInterfaceOrientation.isLandscape {
+                self.swipeGesture?.direction = .left
+            } else {
+                self.swipeGesture?.direction = .up
+                
+            }
+        })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         createChangePhotoLayoutButtons()
-        
-        mainPhotoLayoutView.addGestureRecognizer(createSwipeGestureRecognizer(for: .up))
-        mainPhotoLayoutView.addGestureRecognizer(createSwipeGestureRecognizer(for: .left))
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+        swipeGestureRecognizer.direction = windowInterfaceOrientation == .portrait ? .up : .left
+        self.swipeGesture = swipeGestureRecognizer
+        mainPhotoLayoutView.addGestureRecognizer(swipeGestureRecognizer)
     }
     
 
-    //MARK: -PRIVATE: methods
+    //MARK: - PRIVATE: methods
     
     /// This function allows you to create a button for each type of photo layout grid and add it to the stackview.
     private func createChangePhotoLayoutButtons() {
@@ -120,7 +142,7 @@ class PhotoLayoutViewController: UIViewController {
     
     /// This function allows you to create a image view for the photo layout grid
     /// - parameter stackview: Add the image view in the desired stackview (top or bottom)
-    func createImageView(in stackView: UIStackView) {
+    private func createImageView(in stackView: UIStackView) {
         let photoImageView = UIImageView()
         
         let iconName = "Plus.png"
@@ -173,18 +195,18 @@ class PhotoLayoutViewController: UIViewController {
     }
     
     
-    // MARK: -Swipe to share
+    // MARK: - Swipe to share
     
     /// This function identifies the direction of the swipe
     /// - parameter direction: Direction of the swipe gesture
     /// - returns: The swipe gesture
-    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
-        
-        swipeGestureRecognizer.direction = direction
-        
-        return swipeGestureRecognizer
-    }
+//    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
+//        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+//
+//        swipeGestureRecognizer.direction = direction
+//
+//        return swipeGestureRecognizer
+//    }
     
     
     /// This function triggers the swipe function if the user has swiped and add some animations.
@@ -218,7 +240,9 @@ class PhotoLayoutViewController: UIViewController {
     
     /// This function allows to share the desired content
     private func share() {
-        let image = UIImage(view: mainPhotoLayoutView)
+        guard let image = UIImage(view: mainPhotoLayoutView) else { return }
+        
+    
         
         // set up activity view controller
         let imageToShare = [ image ]
@@ -230,7 +254,6 @@ class PhotoLayoutViewController: UIViewController {
         
         // Did share or cancel
         activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            // Play showPictureView func
             self.showMainPhotoLayoutView()
         }
         
@@ -261,7 +284,9 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigati
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
         currentSelectedButtonImageView?.image = selectedImage
         
-        for subView in currentSelectedButtonImageView!.subviews {
+        guard let currentSelectedButtonImageViewUnwrapped = currentSelectedButtonImageView else { return }
+        
+        for subView in currentSelectedButtonImageViewUnwrapped.subviews {
             if let imageView = subView as? UIImageView {
                 imageView.removeFromSuperview()
             }
@@ -274,11 +299,27 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigati
 }
 
 extension UIImage {
-    convenience init(view: UIView) {
+    convenience init?(view: UIView) {
         UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in:UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        guard let graphicContext = UIGraphicsGetCurrentContext() else { return nil }
+        view.layer.render(in: graphicContext)
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
         UIGraphicsEndImageContext()
-        self.init(cgImage: image!.cgImage!)
+        guard let cgImage = image.cgImage else { return nil }
+        self.init(cgImage: cgImage)
     }
 }
+
+
+//extension PhotoLayoutViewController: UIGestureRecognizerDelegate {
+//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//            let gesture = gestureRecognizer as? UISwipeGestureRecognizer
+//
+//        switch UIDevice.current.orientation {
+//            case .portrait: return gesture?.direction == .up
+//            case .landscapeLeft: return gesture?.direction == .left
+//            case .landscapeRight: return gesture?.direction == .left
+//            default : return false
+//        }
+//        }
+//}
