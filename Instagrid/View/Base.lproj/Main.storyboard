@@ -124,7 +124,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.30588235289999999" green="0.56862745100000001" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.71764705882352942" green="0.84313725490196079" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="JOM-xL-cT2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1z8-G8-pqr"/>
                             <constraint firstItem="3kK-QH-2W3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="36s-wy-YY5"/>
@@ -203,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-40" y="-1577"/>
+            <point key="canvasLocation" x="-69" y="-1558"/>
         </scene>
     </scenes>
     <resources>

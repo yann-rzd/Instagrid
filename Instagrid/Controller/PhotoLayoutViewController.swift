@@ -202,19 +202,23 @@ class PhotoLayoutViewController: UIViewController {
         let screenHeight = UIScreen.main.bounds.height
         let screenWidth = UIScreen.main.bounds.width
 
-        var translationTransform = CGAffineTransform()
+        var translationTransformNeg = CGAffineTransform()
+        var translationTransformPos = CGAffineTransform()
         
         switch sender.direction {
             case .up:
-                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
+                translationTransformNeg = CGAffineTransform(translationX: 0, y: -screenHeight)
+                translationTransformPos = CGAffineTransform(translationX: 0, y: screenHeight)
             case .left:
-                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+                translationTransformNeg = CGAffineTransform(translationX: -screenWidth, y: 0)
+                translationTransformPos = CGAffineTransform(translationX: 0, y: screenHeight)
             default:
                 break
             }
 
         UIView.animate(withDuration: 0.5, animations: {
-            self.mainPhotoLayoutView.transform = translationTransform
+            self.mainPhotoLayoutView.transform = translationTransformNeg
+            self.changePhotoLayoutButtonStackView.transform = translationTransformPos
             self.swipeToShareStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
         }) { (succes) in
 
@@ -251,9 +255,13 @@ class PhotoLayoutViewController: UIViewController {
     private func showMainPhotoLayoutView(){
         mainPhotoLayoutView.transform = .identity
         mainPhotoLayoutView.transform = CGAffineTransform(scaleX: 0, y: 0)
+        
+        changePhotoLayoutButtonStackView.transform = .identity
+        changePhotoLayoutButtonStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
 
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
             self.mainPhotoLayoutView.transform = .identity
+            self.changePhotoLayoutButtonStackView.transform = .identity
             self.swipeToShareStackView.transform = .identity
         })
     }
