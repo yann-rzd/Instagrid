@@ -252,7 +252,7 @@ class PhotoLayoutViewController: UIViewController {
     
     
     /// This function resets the position of the elements
-    private func showMainPhotoLayoutView(){
+    private func showMainPhotoLayoutView() {
         mainPhotoLayoutView.transform = .identity
         mainPhotoLayoutView.transform = CGAffineTransform(scaleX: 0, y: 0)
         
