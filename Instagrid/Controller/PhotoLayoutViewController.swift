@@ -193,11 +193,11 @@ class PhotoLayoutViewController: UIViewController {
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
-            self.openCamera()
+            self.checkAuthorizationCamera()
         }))
         
         alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
-            self.openGallery()
+            self.checkAuthorizationGalery()
         }))
         
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
@@ -206,40 +206,7 @@ class PhotoLayoutViewController: UIViewController {
     }
     
     
-    /// This function open the camera
-    private func openCamera() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerController.SourceType.camera
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else
-        {
-            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
     
-    
-    /// This function open the gallery
-    private func openGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.allowsEditing = false
-            imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else
-        {
-            let alert  = UIAlertController(title: "Warning", message: "You don't have permission to access gallery.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
     
     
     // MARK: - Swipe to share
@@ -337,7 +304,96 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigati
         
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    private func checkAuthorizationCamera() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if response {
+                self.openCamera()
+            } else {
+                let alert = UIAlertController(title: "", message: "You have refused access to your camera. You can change this in the settings.", preferredStyle: .alert)
+                
+                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+                    
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+                    
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl)
+                    }
+                }
+                
+                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+                
+                alert.addAction(cancel)
+                alert.addAction(settings)
+                
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
+    
+    private func checkAuthorizationGalery() {
+        
+        PHPhotoLibrary.requestAuthorization { status in
+            
+            switch status{
+            case .authorized where UIImagePickerController.isSourceTypeAvailable(.photoLibrary):
+                
+                self.openGallery()
+                
+            default:
+                
+                let alert = UIAlertController(title: "", message: "You have refused access to your gallery. You can change this in the settings.", preferredStyle: .alert)
+                
+                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+                    
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+                    
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl)
+                    }
+                }
+                
+                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+                
+                alert.addAction(cancel)
+                alert.addAction(settings)
+                
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
+    
+    
+    /// This function open the camera
+    private func openCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .camera
+        
+        DispatchQueue.main.async {
+            self.present(imagePicker, animated: true)
+        }
+    }
+    
+    
+    /// This function open the gallery
+    private func openGallery() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        
+        DispatchQueue.main.async {
+            self.present(imagePicker, animated: true)
+        }
+    }
 }
+
 
 extension UIImage {
     convenience init?(view: UIView) {
