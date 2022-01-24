@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Photos
+import PhotosUI
 
 class PhotoLayoutViewController: UIViewController {
     
@@ -166,7 +168,7 @@ class PhotoLayoutViewController: UIViewController {
         
         photoImageView.backgroundColor = UIColor(named: "Insta Gray Photo")
         
-        didTapOnImage(on: photoImageView)
+        addTapGestureRecognizer(on: photoImageView)
         
         openPhotoLibraryImages.append(photoImageView)
         stackView.addArrangedSubview(photoImageView)
@@ -176,7 +178,7 @@ class PhotoLayoutViewController: UIViewController {
     
     /// This function recognize when the user tap on photoImageView
     /// - parameter imageView: The imageView tapped
-    private func didTapOnImage(on imageView: UIImageView) {
+    private func addTapGestureRecognizer(on imageView: UIImageView) {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openPhotoLibrary(tapGestureRecognizer:)))
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -203,7 +205,9 @@ class PhotoLayoutViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func openCamera() {
+    
+    /// This function open the camera
+    private func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -219,11 +223,13 @@ class PhotoLayoutViewController: UIViewController {
         }
     }
     
-    func openGallery() {
+    
+    /// This function open the gallery
+    private func openGallery() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.allowsEditing = true
+            imagePicker.allowsEditing = false
             imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }

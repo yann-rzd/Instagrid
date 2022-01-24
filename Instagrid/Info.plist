@@ -11,11 +11,13 @@
 		<string>ThirstySoftRegular.otf</string>
 	</array>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Please allow access</string>
+	<string>Please provide access to your library so that you can create great photolayout with your own photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please provide access to your library so that you can create great photolayout with your own photos</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>Please provide access to your camera so that you can create great photolayout with your own photos</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please provide access so that you can create great photolayout with your own photos</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
