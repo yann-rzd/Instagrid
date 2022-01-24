@@ -8,13 +8,13 @@
 import UIKit
 
 class PhotoLayoutViewController: UIViewController {
-
+    
     //MARK: - PRIVATE: properties
     
     @IBOutlet private weak var changePhotoLayoutButtonStackView: UIStackView!
     @IBOutlet private weak var topSectionLayoutStackView: UIStackView!
     @IBOutlet private weak var bottomSectionLayoutStackView: UIStackView!
-
+    
     @IBOutlet private weak var mainPhotoLayoutView: UIView!
     
     @IBOutlet private weak var swipeToShareStackView: UIStackView!
@@ -27,6 +27,7 @@ class PhotoLayoutViewController: UIViewController {
     
     private var openPhotoLibraryImages: [UIImageView] = []
     
+    @available(iOS 15.0, *)
     private var windowInterfaceOrientation: UIInterfaceOrientation? {
         return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
     }
@@ -34,6 +35,7 @@ class PhotoLayoutViewController: UIViewController {
     private var swipeGesture: UISwipeGestureRecognizer?
     
     // MARK: - INTERNAL: Methods
+    
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
@@ -57,10 +59,10 @@ class PhotoLayoutViewController: UIViewController {
         let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         swipeGestureRecognizer.direction = windowInterfaceOrientation == .portrait ? .up : .left
         self.swipeGesture = swipeGestureRecognizer
-        mainPhotoLayoutView.addGestureRecognizer(swipeGestureRecognizer)
+        view.addGestureRecognizer(swipeGestureRecognizer)
     }
     
-
+    
     //MARK: - PRIVATE: methods
     
     /// This function allows you to create a button for each type of photo layout grid and add it to the stackview.
@@ -96,7 +98,7 @@ class PhotoLayoutViewController: UIViewController {
         changeLayoutButton.isSelected = true
         setupLayoutViews(photoLayoutIndex: changeLayoutButton.tag)
     }
-
+    
     
     /// This function creates a photo layout
     /// - parameter photoLayoutIndex: Index of the array where the layout is located (in PhotoLayoutProvider)
@@ -104,7 +106,7 @@ class PhotoLayoutViewController: UIViewController {
         cleanLayoutGrid()
         let photoLayout = photoLayoutProvider.photoLayouts[photoLayoutIndex]
         createLayout(from: photoLayout)
-    
+        
     }
     
     
@@ -162,8 +164,8 @@ class PhotoLayoutViewController: UIViewController {
             iconView.widthAnchor.constraint(equalToConstant: 45)
         ])
         
-        photoImageView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
-
+        photoImageView.backgroundColor = UIColor(named: "Insta Gray Photo")
+        
         didTapOnImage(on: photoImageView)
         
         openPhotoLibraryImages.append(photoImageView)
@@ -201,27 +203,27 @@ class PhotoLayoutViewController: UIViewController {
     @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
         let screenHeight = UIScreen.main.bounds.height
         let screenWidth = UIScreen.main.bounds.width
-
+        
         var translationTransformNeg = CGAffineTransform()
         var translationTransformPos = CGAffineTransform()
         
         switch sender.direction {
-            case .up:
-                translationTransformNeg = CGAffineTransform(translationX: 0, y: -screenHeight)
-                translationTransformPos = CGAffineTransform(translationX: 0, y: screenHeight)
-            case .left:
-                translationTransformNeg = CGAffineTransform(translationX: -screenWidth, y: 0)
-                translationTransformPos = CGAffineTransform(translationX: 0, y: screenHeight)
-            default:
-                break
-            }
-
+        case .up:
+            translationTransformNeg = CGAffineTransform(translationX: 0, y: -screenHeight)
+            translationTransformPos = CGAffineTransform(translationX: 0, y: screenHeight)
+        case .left:
+            translationTransformNeg = CGAffineTransform(translationX: -screenWidth, y: 0)
+            translationTransformPos = CGAffineTransform(translationX: screenHeight, y: 0)
+        default:
+            break
+        }
+        
         UIView.animate(withDuration: 0.5, animations: {
             self.mainPhotoLayoutView.transform = translationTransformNeg
             self.changePhotoLayoutButtonStackView.transform = translationTransformPos
             self.swipeToShareStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
         }) { (succes) in
-
+            
             if succes {
                 self.share()
             }
@@ -234,16 +236,16 @@ class PhotoLayoutViewController: UIViewController {
         guard let image = UIImage(view: mainPhotoLayoutView) else { return }
         
         // set up activity view controller
-        let imageToShare = [ image ]
+        let imageToShare = [image]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view
         
-        // exclude some activity types from the list (optional)
-        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
-        
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) || UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            return
+        }
+
         // Did share or cancel
-        activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            self.showMainPhotoLayoutView()
+        activityViewController.completionWithItemsHandler = { [weak self] _, _, _, _ in
+            self?.showMainPhotoLayoutView()
         }
         
         // present the view controller
@@ -258,7 +260,7 @@ class PhotoLayoutViewController: UIViewController {
         
         changePhotoLayoutButtonStackView.transform = .identity
         changePhotoLayoutButtonStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
-
+        
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
             self.mainPhotoLayoutView.transform = .identity
             self.changePhotoLayoutButtonStackView.transform = .identity
@@ -286,7 +288,7 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigati
         }
         
         currentSelectedButtonImageView = nil
-  
+        
         picker.dismiss(animated: true, completion: nil)
     }
 }
