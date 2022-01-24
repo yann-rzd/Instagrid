@@ -14,6 +14,8 @@
 	<string>Please allow access</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please provide access to your library so that you can create great photolayout with your own photos</string>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
