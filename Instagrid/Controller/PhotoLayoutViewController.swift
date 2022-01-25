@@ -29,9 +29,13 @@ class PhotoLayoutViewController: UIViewController {
     
     private var openPhotoLibraryImages: [UIImageView] = []
     
-    @available(iOS 15.0, *)
     private var windowInterfaceOrientation: UIInterfaceOrientation? {
-        return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.interfaceOrientation
+        return window
+        
+//        return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
     }
     
     private var swipeGesture: UISwipeGestureRecognizer?
@@ -204,10 +208,7 @@ class PhotoLayoutViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
-    
-    
-    
-    
+
     
     // MARK: - Swipe to share
     
@@ -257,8 +258,19 @@ class PhotoLayoutViewController: UIViewController {
         }
 
         // Did share or cancel
-        activityViewController.completionWithItemsHandler = { [weak self] _, _, _, _ in
-            self?.showMainPhotoLayoutView()
+        activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            guard completed else { return }
+            
+            self.showMainPhotoLayoutView()
+            
+            if let shareError = error {
+                let alert = UIAlertController(title: "", message: "error while sharing: \(shareError.localizedDescription)", preferredStyle: .alert)
+                let failedToShare = UIAlertAction(title: "Failed to share", style: .default)
+                
+                alert.addAction(failedToShare)
+            
+                self.showMainPhotoLayoutView()
+            }
         }
         
         // present the view controller
