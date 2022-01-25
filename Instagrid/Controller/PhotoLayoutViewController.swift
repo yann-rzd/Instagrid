@@ -13,6 +13,7 @@ class PhotoLayoutViewController: UIViewController {
     
     //MARK: - PRIVATE: properties
     
+    
     @IBOutlet private weak var changePhotoLayoutButtonStackView: UIStackView!
     @IBOutlet private weak var topSectionLayoutStackView: UIStackView!
     @IBOutlet private weak var bottomSectionLayoutStackView: UIStackView!
@@ -71,6 +72,9 @@ class PhotoLayoutViewController: UIViewController {
     
     //MARK: - PRIVATE: methods
     
+    
+    
+    //MARK: - interface management
     /// This function allows you to create a button for each type of photo layout grid and add it to the stackview.
     private func createChangePhotoLayoutButtons() {
         for (index, photoLayout) in photoLayoutProvider.photoLayouts.enumerated() {
@@ -145,6 +149,10 @@ class PhotoLayoutViewController: UIViewController {
             }
         }
     }
+    
+    
+    
+    //MARK: - user interactions
     
     
     /// This function allows you to create a image view for the photo layout grid
@@ -256,7 +264,10 @@ class PhotoLayoutViewController: UIViewController {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) || UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             return
         }
-
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
+        
         // Did share or cancel
         activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
             guard completed else { return }
@@ -272,9 +283,6 @@ class PhotoLayoutViewController: UIViewController {
                 self.showMainPhotoLayoutView()
             }
         }
-        
-        // present the view controller
-        self.present(activityViewController, animated: true, completion: nil)
     }
     
     
