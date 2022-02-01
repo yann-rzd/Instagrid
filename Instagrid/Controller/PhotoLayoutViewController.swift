@@ -9,7 +9,7 @@ import UIKit
 import Photos
 import PhotosUI
 
-class PhotoLayoutViewController: UIViewController {
+final class PhotoLayoutViewController: UIViewController {
     
     //MARK: - PRIVATE: properties
     
@@ -244,9 +244,9 @@ class PhotoLayoutViewController: UIViewController {
             self.mainPhotoLayoutView.transform = translationTransformNeg
             self.changePhotoLayoutButtonStackView.transform = translationTransformPos
             self.swipeToShareStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
-        }) { (succes) in
+        }) { (success) in
             
-            if succes {
+            if success {
                 self.share()
             }
         }
@@ -270,9 +270,6 @@ class PhotoLayoutViewController: UIViewController {
         
         // Did share or cancel
         activityViewController.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            guard completed else { return }
-            
-            self.showMainPhotoLayoutView()
             
             if let shareError = error {
                 let alert = UIAlertController(title: "", message: "error while sharing: \(shareError.localizedDescription)", preferredStyle: .alert)
@@ -280,8 +277,11 @@ class PhotoLayoutViewController: UIViewController {
                 
                 alert.addAction(failedToShare)
             
-                self.showMainPhotoLayoutView()
             }
+            
+            self.showMainPhotoLayoutView()
+            
+           
         }
     }
     
@@ -299,30 +299,6 @@ class PhotoLayoutViewController: UIViewController {
             self.changePhotoLayoutButtonStackView.transform = .identity
             self.swipeToShareStackView.transform = .identity
         })
-    }
-}
-
-
-// MARK: - EXTENSIONS
-
-extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        guard let selectedImage = info[.originalImage] as? UIImage else { return }
-        currentSelectedButtonImageView?.image = selectedImage
-        
-        guard let currentSelectedButtonImageViewUnwrapped = currentSelectedButtonImageView else { return }
-        
-        for subView in currentSelectedButtonImageViewUnwrapped.subviews {
-            if let imageView = subView as? UIImageView {
-                imageView.removeFromSuperview()
-            }
-        }
-        
-        currentSelectedButtonImageView = nil
-        
-        picker.dismiss(animated: true, completion: nil)
     }
     
     private func checkAuthorizationCamera() {
@@ -415,14 +391,27 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigati
 }
 
 
-extension UIImage {
-    convenience init?(view: UIView) {
-        UIGraphicsBeginImageContext(view.frame.size)
-        guard let graphicContext = UIGraphicsGetCurrentContext() else { return nil }
-        view.layer.render(in: graphicContext)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
-        UIGraphicsEndImageContext()
-        guard let cgImage = image.cgImage else { return nil }
-        self.init(cgImage: cgImage)
+// MARK: - EXTENSIONS
+
+extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let selectedImage = info[.originalImage] as? UIImage else { return }
+        currentSelectedButtonImageView?.image = selectedImage
+        
+        guard let currentSelectedButtonImageViewUnwrapped = currentSelectedButtonImageView else { return }
+        
+        for subView in currentSelectedButtonImageViewUnwrapped.subviews {
+            if let imageView = subView as? UIImageView {
+                imageView.removeFromSuperview()
+            }
+        }
+        
+        currentSelectedButtonImageView = nil
+        
+        picker.dismiss(animated: true, completion: nil)
     }
+    
+    
 }

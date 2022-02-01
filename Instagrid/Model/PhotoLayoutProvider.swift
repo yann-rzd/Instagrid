@@ -8,6 +8,7 @@
 import Foundation
 
 struct PhotoLayoutProvider {
+    private init() { }
     static let shared = PhotoLayoutProvider()
     
     let photoLayouts: [PhotoLayout] = [
