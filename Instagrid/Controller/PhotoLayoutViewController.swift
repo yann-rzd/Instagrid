@@ -350,10 +350,6 @@ final class PhotoLayoutViewController: UIViewController {
         let imageToShare = [image]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) || UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            return
-        }
-        
         // present the view controller
         self.present(activityViewController, animated: true, completion: nil)
         
@@ -369,8 +365,6 @@ final class PhotoLayoutViewController: UIViewController {
             }
             
             self.showMainPhotoLayoutView()
-            
-           
         }
     }
     
