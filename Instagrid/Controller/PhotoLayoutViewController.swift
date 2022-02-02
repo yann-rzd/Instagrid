@@ -75,6 +75,7 @@ final class PhotoLayoutViewController: UIViewController {
     
     
     //MARK: - interface management
+    
     /// This function allows you to create a button for each type of photo layout grid and add it to the stackview.
     private func createChangePhotoLayoutButtons() {
         for (index, photoLayout) in photoLayoutProvider.photoLayouts.enumerated() {
@@ -116,15 +117,6 @@ final class PhotoLayoutViewController: UIViewController {
         cleanLayoutGrid()
         let photoLayout = photoLayoutProvider.photoLayouts[photoLayoutIndex]
         createLayout(from: photoLayout)
-        
-    }
-    
-    
-    /// This function allows you to remove all the buttons from the photo layout grid
-    private func cleanLayoutGrid() {
-        topSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
-        bottomSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
-        openPhotoLibraryImages.removeAll()
     }
     
     
@@ -151,8 +143,12 @@ final class PhotoLayoutViewController: UIViewController {
     }
     
     
-    
-    //MARK: - user interactions
+    /// This function allows you to remove all the buttons from the photo layout grid
+    private func cleanLayoutGrid() {
+        topSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
+        bottomSectionLayoutStackView.subviews.forEach({ $0.removeFromSuperview() })
+        openPhotoLibraryImages.removeAll()
+    }
     
     
     /// This function allows you to create a image view for the photo layout grid
@@ -188,6 +184,8 @@ final class PhotoLayoutViewController: UIViewController {
     }
     
     
+    //MARK: - Open gallery or camera
+    
     /// This function recognize when the user tap on photoImageView
     /// - parameter imageView: The imageView tapped
     private func addTapGestureRecognizer(on imageView: UIImageView) {
@@ -215,6 +213,97 @@ final class PhotoLayoutViewController: UIViewController {
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    /// This function check the authorisation to open the camera
+    private func checkAuthorizationCamera() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if response {
+                self.openCamera()
+            } else {
+                let alert = UIAlertController(title: "", message: "You have refused access to your camera. You can change this in the settings.", preferredStyle: .alert)
+                
+                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+                    
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+                    
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl)
+                    }
+                }
+                
+                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+                
+                alert.addAction(cancel)
+                alert.addAction(settings)
+                
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
+    
+    /// This function check the authorisation to open the gallery
+    private func checkAuthorizationGalery() {
+        
+        PHPhotoLibrary.requestAuthorization { status in
+            
+            switch status{
+            case .authorized where UIImagePickerController.isSourceTypeAvailable(.photoLibrary):
+                
+                self.openGallery()
+                
+            default:
+                
+                let alert = UIAlertController(title: "", message: "You have refused access to your gallery. You can change this in the settings.", preferredStyle: .alert)
+                
+                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+                    
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+                    
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl)
+                    }
+                }
+                
+                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+                
+                alert.addAction(cancel)
+                alert.addAction(settings)
+                
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
+    
+    
+    /// This function open the camera
+    private func openCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .camera
+        
+        DispatchQueue.main.async {
+            self.present(imagePicker, animated: true)
+        }
+    }
+    
+    
+    /// This function open the gallery
+    private func openGallery() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        
+        DispatchQueue.main.async {
+            self.present(imagePicker, animated: true)
+        }
     }
 
     
@@ -301,99 +390,14 @@ final class PhotoLayoutViewController: UIViewController {
         })
     }
     
-    private func checkAuthorizationCamera() {
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
-            if response {
-                self.openCamera()
-            } else {
-                let alert = UIAlertController(title: "", message: "You have refused access to your camera. You can change this in the settings.", preferredStyle: .alert)
-                
-                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
-                    
-                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
-                    
-                    if UIApplication.shared.canOpenURL(settingsUrl) {
-                        UIApplication.shared.open(settingsUrl)
-                    }
-                }
-                
-                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
-                
-                alert.addAction(cancel)
-                alert.addAction(settings)
-                
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true)
-                }
-            }
-        }
-    }
-    
-    private func checkAuthorizationGalery() {
-        
-        PHPhotoLibrary.requestAuthorization { status in
-            
-            switch status{
-            case .authorized where UIImagePickerController.isSourceTypeAvailable(.photoLibrary):
-                
-                self.openGallery()
-                
-            default:
-                
-                let alert = UIAlertController(title: "", message: "You have refused access to your gallery. You can change this in the settings.", preferredStyle: .alert)
-                
-                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
-                    
-                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
-                    
-                    if UIApplication.shared.canOpenURL(settingsUrl) {
-                        UIApplication.shared.open(settingsUrl)
-                    }
-                }
-                
-                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
-                
-                alert.addAction(cancel)
-                alert.addAction(settings)
-                
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true)
-                }
-            }
-        }
-    }
     
     
-    /// This function open the camera
-    private func openCamera() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .camera
-        
-        DispatchQueue.main.async {
-            self.present(imagePicker, animated: true)
-        }
-    }
-    
-    
-    /// This function open the gallery
-    private func openGallery() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        
-        DispatchQueue.main.async {
-            self.present(imagePicker, animated: true)
-        }
-    }
 }
 
 
 // MARK: - EXTENSIONS
 
-extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension PhotoLayoutViewController: UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -413,5 +417,9 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate, UINavigati
         picker.dismiss(animated: true, completion: nil)
     }
     
+    
+}
+
+extension PhotoLayoutViewController: UINavigationControllerDelegate {
     
 }
