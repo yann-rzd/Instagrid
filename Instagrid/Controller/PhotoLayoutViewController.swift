@@ -36,7 +36,7 @@ final class PhotoLayoutViewController: UIViewController {
         let window = windowScene?.interfaceOrientation
         return window
         
-//        return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
+        //        return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
     }
     
     private var swipeGesture: UISwipeGestureRecognizer?
@@ -218,66 +218,57 @@ final class PhotoLayoutViewController: UIViewController {
     
     /// This function check the authorisation to open the camera
     private func checkAuthorizationCamera() {
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
-            if response {
-                self.openCamera()
-            } else {
-                let alert = UIAlertController(title: "", message: "You have refused access to your camera. You can change this in the settings.", preferredStyle: .alert)
-                
-                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
-                    
-                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
-                    
-                    if UIApplication.shared.canOpenURL(settingsUrl) {
-                        UIApplication.shared.open(settingsUrl)
-                    }
-                }
-                
-                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
-                
-                alert.addAction(cancel)
-                alert.addAction(settings)
-                
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true)
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { [weak self] isAuthorized in
+            
+            DispatchQueue.main.async {
+                if isAuthorized && UIImagePickerController.isSourceTypeAvailable(.camera) {
+                    self?.openCamera()
+                } else {
+                    self?.presentNotAuthorizedProhibitedAlert(message: "You have refused access to your camera. You can change this in the settings.")
                 }
             }
         }
     }
     
+    
     /// This function check the authorisation to open the gallery
     private func checkAuthorizationGalery() {
         
-        PHPhotoLibrary.requestAuthorization { status in
-            
-            switch status{
-            case .authorized where UIImagePickerController.isSourceTypeAvailable(.photoLibrary):
-                
-                self.openGallery()
-                
-            default:
-                
-                let alert = UIAlertController(title: "", message: "You have refused access to your gallery. You can change this in the settings.", preferredStyle: .alert)
-                
-                let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized where UIImagePickerController.isSourceTypeAvailable(.photoLibrary):
                     
-                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+                    self?.openGallery()
                     
-                    if UIApplication.shared.canOpenURL(settingsUrl) {
-                        UIApplication.shared.open(settingsUrl)
-                    }
-                }
-                
-                let cancel = UIAlertAction(title: "Cancel", style: .destructive)
-                
-                alert.addAction(cancel)
-                alert.addAction(settings)
-                
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true)
+                default:
+                    self?.presentNotAuthorizedProhibitedAlert(message: "You have refused access to your gallery. You can change this in the settings.")
                 }
             }
         }
+    }
+    
+    
+    /// This function display an alert if the authorization is refused
+    /// - parameter message: Description message.
+    private func presentNotAuthorizedProhibitedAlert(message: String) {
+        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        
+        let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+            
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl)
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+        
+        alert.addAction(cancel)
+        alert.addAction(settings)
+        
+        present(alert, animated: true)
     }
     
     
@@ -288,9 +279,7 @@ final class PhotoLayoutViewController: UIViewController {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .camera
         
-        DispatchQueue.main.async {
-            self.present(imagePicker, animated: true)
-        }
+        present(imagePicker, animated: true)
     }
     
     
@@ -301,11 +290,9 @@ final class PhotoLayoutViewController: UIViewController {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
         
-        DispatchQueue.main.async {
-            self.present(imagePicker, animated: true)
-        }
+        present(imagePicker, animated: true)
     }
-
+    
     
     // MARK: - Swipe to share
     
@@ -361,7 +348,6 @@ final class PhotoLayoutViewController: UIViewController {
                 let failedToShare = UIAlertAction(title: "Failed to share", style: .default)
                 
                 alert.addAction(failedToShare)
-            
             }
             
             self.showMainPhotoLayoutView()
@@ -383,9 +369,6 @@ final class PhotoLayoutViewController: UIViewController {
             self.swipeToShareStackView.transform = .identity
         })
     }
-    
-    
-    
 }
 
 
@@ -410,8 +393,6 @@ extension PhotoLayoutViewController: UIImagePickerControllerDelegate {
         
         picker.dismiss(animated: true, completion: nil)
     }
-    
-    
 }
 
 extension PhotoLayoutViewController: UINavigationControllerDelegate {
