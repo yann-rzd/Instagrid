@@ -35,8 +35,6 @@ final class PhotoLayoutViewController: UIViewController {
         let windowScene = scenes.first as? UIWindowScene
         let window = windowScene?.interfaceOrientation
         return window
-        
-        //        return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
     }
     
     private var swipeGesture: UISwipeGestureRecognizer?
@@ -54,7 +52,6 @@ final class PhotoLayoutViewController: UIViewController {
                 self.swipeGesture?.direction = .left
             } else {
                 self.swipeGesture?.direction = .up
-                
             }
         })
     }
@@ -80,7 +77,6 @@ final class PhotoLayoutViewController: UIViewController {
     private func createChangePhotoLayoutButtons() {
         for (index, photoLayout) in photoLayoutProvider.photoLayouts.enumerated() {
             let button = UIButton()
-            
             
             guard let selectedImage = UIImage(named: "Selected") else { return }
             button.setImage(selectedImage, for: .selected)
@@ -162,7 +158,7 @@ final class PhotoLayoutViewController: UIViewController {
         let iconName = "Plus.png"
         let icon = UIImage(named: iconName)
         let iconView = UIImageView(image: icon!)
-        
+     
         photoImageView.contentMode = .scaleAspectFill
         photoImageView.clipsToBounds = true
         
