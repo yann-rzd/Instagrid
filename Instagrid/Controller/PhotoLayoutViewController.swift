@@ -357,17 +357,11 @@ final class PhotoLayoutViewController: UIViewController {
     
     /// This function resets the position of the elements
     private func showMainPhotoLayoutView() {
-        mainPhotoLayoutView.transform = .identity
-        mainPhotoLayoutView.transform = CGAffineTransform(scaleX: 0, y: 0)
-        
-        changePhotoLayoutButtonStackView.transform = .identity
-        changePhotoLayoutButtonStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
-        
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+        UIView.animate(withDuration: 0.5) {
             self.mainPhotoLayoutView.transform = .identity
             self.changePhotoLayoutButtonStackView.transform = .identity
             self.swipeToShareStackView.transform = .identity
-        })
+        }
     }
 }
 
