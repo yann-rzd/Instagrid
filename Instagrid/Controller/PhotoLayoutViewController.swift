@@ -90,7 +90,10 @@ final class PhotoLayoutViewController: UIViewController {
             
             button.contentVerticalAlignment = .fill
             button.contentHorizontalAlignment = .fill
-            button.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: button, attribute: .width, multiplier: 1, constant: 0))
+            
+            let buttonConstraint = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: button, attribute: .width, multiplier: 1, constant: 0)
+            buttonConstraint.priority = UILayoutPriority(rawValue: 999)
+            button.addConstraint(buttonConstraint)
             
             button.tag = index
             
